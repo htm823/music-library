@@ -154,3 +154,26 @@ categorySelect.addEventListener('change', (e) => {
 
 // Initial render
 renderSongs();
+
+tbody.addEventListener('click', (e) => {
+	if (!e.target.classList.contains('copy-btn')) {
+		return;
+	}
+
+	const cellContent = e.target.closest('.cell-content');
+	const textElement = cellContent.querySelector('.text');
+	const textToCopy = textElement.textContent;
+
+	navigator.clipboard.writeText(textToCopy)
+		.then(() => {
+			const originalText = e.target.textContent;
+            e.target.textContent = 'Copied!';
+
+            setTimeout(() => {
+                e.target.textContent = originalText;
+            }, 1000);
+		})
+		.catch((err) => {
+            console.error('Failed to copy:', err);
+         });;
+});
